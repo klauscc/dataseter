@@ -20,3 +20,11 @@ bash decompress.sh
 ```
 
 Change the directory if needed. The default decompressed directory is `./decompressed`
+
+## 4. Deframe
+
+```
+python extract_frame.py
+```
+
+deframe videos. All videos in dir `./decompressed/video` will be deframe to `./decompressed/frame`. The sub-directory structure will stay the same.
