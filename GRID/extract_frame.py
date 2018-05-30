@@ -55,15 +55,44 @@ def glob_video(path_prefix='./decompressed/video', video_ext='.mpg'):
     return glob.glob(path_pattern)
 
 
+def check_deframe(frame_dir='./decompressed/frame', frame_num=75):
+    """check which video decompressed failed
+
+    Args:
+        frame_dir: the directory save frames.
+
+    Returns: TODO
+
+    """
+    videos = glob.glob(os.path.join(frame_dir, '*/*'))
+    for video in videos:
+        frame_list = glob.glob(os.path.join(video, '*.jpg'))
+        if len(frame_list) != frame_num:
+            print('{} only has {} frames'.format(video, len(frame_list)))
+
+
+def parse_args():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--deframe', help='True if perform deframe video', action='store_true')
+    args = parser.parse_args()
+    return args
+
+
 def main():
     config = {
         'video_path': './decompressed/video',
         'video_ext': '.mpg',
         'deframe_pool': 4
     }
-    video_list = glob_video(config['video_path'], config['video_ext'])
-    p = Pool(config['deframe_pool'])
-    p.map(deframe, video_list) 
+    args = parse_args()
+    if args.deframe:
+        video_list = glob_video(config['video_path'], config['video_ext'])
+        p = Pool(config['deframe_pool'])
+        p.map(deframe, video_list)
+
+    check_deframe()
 
 
 if __name__ == "__main__":
