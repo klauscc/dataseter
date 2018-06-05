@@ -52,14 +52,19 @@ def find_files(directory, pattern):
 
 
 def extract_mouth(filepath):
-    print "Processing: {}".format(filepath)
-    video = Video(
-        vtype='face',
-        face_predictor_path= './shape_predictor_68_face_landmarks.dat').from_video(filepath)
-
     filepath_wo_ext = os.path.splitext(filepath)[0]
     # target_dir = os.path.join(TARGET_PATH, filepath_wo_ext)
     target_dir = filepath_wo_ext.replace('video', 'mouth')
+    if os.path.exists(target_dir):
+        print('{} already processed'.format(filepath))
+        return
+
+    print "Processing: {}".format(filepath)
+    video = Video(
+        vtype='face',
+        face_predictor_path='./shape_predictor_68_face_landmarks.dat'
+    ).from_video(filepath)
+
     mkdir_p(target_dir)
 
     i = 1
@@ -73,8 +78,10 @@ def main():
     SOURCE_EXTS = sys.argv[2]
     TARGET_PATH = sys.argv[3]
     filenames = find_files(SOURCE_PATH, SOURCE_EXTS)
-    p = Pool(4)
-    p.map(extract_mouth, filenames)
+    # p = Pool(8)
+    # p.map(extract_mouth, filenames)
+    for filename in filenames:
+        extract_mouth(filename)
 
 
 if __name__ == "__main__":
