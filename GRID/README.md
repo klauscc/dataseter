@@ -21,10 +21,34 @@ bash decompress.sh
 
 Change the directory if needed. The default decompressed directory is `./decompressed`
 
-## 4. Deframe
+## 4. Deframe (Optional)
 
 ```
 python extract_frame.py
 ```
 
 deframe videos. All videos in dir `./decompressed/video` will be deframe to `./decompressed/frame`. The sub-directory structure will stay the same.
+
+## 5. Extract mouth
+
+1. download dlib shape predictor
+
+```
+./get_shape_predictor.sh
+
+```
+
+2. extract mouth using `extract_mouth.py`
+
+For example:
+```
+python extract_mouth.py ../decompressed/video *.mpg ../decompressed/mouth shape_predictor_68_face_landmarks.dat
+```
+
+## 6. Split train and test
+There are two types of split. 
+
+  1. Overlapped: 255 videos of each speaker chosen to test set. The remainings are in training set.
+  2. Unseen: Speaker [s1,s2,s20,s22] are chosen to test set and the remainings are in training set.
+
+Pre-splited sets are in `./db-split`
