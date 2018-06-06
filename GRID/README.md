@@ -52,3 +52,11 @@ There are two types of split.
   2. Unseen: Speaker [s1,s2,s20,s22] are chosen to test set and the remainings are in training set.
 
 Pre-splited sets are in `./db-split`
+
+## 7. Create tfrecord
+Create tfrecord using `create_tfrecord.py`. See usage use `python create_tfrecord.py -h`
+An example:
+
+```
+python create_tfrecord.py --split_file db-split/overlapped_test.txt --save_file ../../tf-records/overlapped_test.tfrecord --video_dir ../../decompressed/mouth --align_dir ../../decompressed/align
+```
