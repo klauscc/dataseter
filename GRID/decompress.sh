@@ -33,7 +33,7 @@ do
 
         align_path=${ALIGN_PATH//#/$i}
         mkdir $ALIGN_DECOMPRESS_DIR/s$i
-        tar xf $align_path -C $ALIGN_DECOMPRESS_DIR/s$i
+        tar -C $ALIGN_DECOMPRESS_DIR/s$i --strip-components=1 -xf $align_path align
     fi
 done
 
