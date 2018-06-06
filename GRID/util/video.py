@@ -224,6 +224,10 @@ class Video(object):
             mouth_b = int(mouth_centroid_norm[1] + MOUTH_HEIGHT / 2)
 
             mouth_crop_image = resized_img[mouth_t:mouth_b, mouth_l:mouth_r]
+            # in case the index out of bound 
+            if mouth_crop_image.shape[0] != MOUTH_HEIGHT or mouth_crop_image.shape[1] != MOUTH_WIDTH:
+                mouth_crop_image = transform.resize(
+                    mouth_crop_image, (MOUTH_HEIGHT, MOUTH_WIDTH))
 
             mouth_frames.append(mouth_crop_image)
         return mouth_frames

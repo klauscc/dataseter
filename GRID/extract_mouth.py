@@ -78,10 +78,10 @@ def main():
     SOURCE_EXTS = sys.argv[2]
     TARGET_PATH = sys.argv[3]
     filenames = find_files(SOURCE_PATH, SOURCE_EXTS)
-    # p = Pool(8)
-    # p.map(extract_mouth, filenames)
-    for filename in filenames:
-        extract_mouth(filename)
+    p = Pool(4)
+    p.map(extract_mouth, filenames)
+    # for filename in filenames:
+        # extract_mouth(filename)
 
 
 if __name__ == "__main__":
